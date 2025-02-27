@@ -12,7 +12,12 @@ export const getProducts = async (
       headers: new Headers({
         'X-Shopify-Access-Token': env.SHOPIFY_API_KEY,
       }),
+      next: {
+        revalidate: 3600,
+        tags: ['main-products'],
+      },
     });
+
     const { products } = await response.json();
 
     const transformedProducts = products.map((product: any) => {
